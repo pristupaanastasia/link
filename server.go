@@ -13,12 +13,14 @@ import (
 )
 var ctx = context.Background()
 var rdb = redis.NewClient(&redis.Options{
-Addr:     "localhost:6379",
+Addr:     "redis:6379",
 Password: "", // no password set
 DB:       0,  // use default DB
 })
 
-
+func TestGet(){
+	
+}
 
 func InfoHandler(c echo.Context) error{
 	link := c.Param("link")
@@ -52,8 +54,9 @@ func ShortifyHandler(c echo.Context) error {
 func main() {
 
 	e := echo.New()
-
+	
 	e.POST("/shortify/:link",ShortifyHandler)
 	e.GET("/:link",InfoHandler)
+
 	e.Logger.Fatal(e.Start(":9000"))
 }

@@ -1,0 +1,32 @@
+version: "3.6"
+
+services:
+  web:
+    build: .
+    restart: always
+    volumes:
+      - ./:/go/src/app
+    environment:
+      - RHOST=redis
+    ports:
+      - 9000:9000
+    networks:
+      - custom
+    depends_on:
+      - redis
+  redis:
+    image: redis:4.0.5-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - custom
+    volumes:
+      - redis-data:/data
+  
+networks:
+  custom:
+
+volumes:
+  redis-data:
