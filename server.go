@@ -38,16 +38,13 @@ func testsite(site1 string, ch chan *site){
 		}else{
 			buf = site{name: site1, code:200}
 		}
-	}
-	
+	}	
 	ch <- &buf
-	//fmt.Println(*(<-ch))
 }
 
 func TestGet(){
 
 	for {
-
 		val := rdb.Do(ctx, "KEYS", "*").String()
 		words := strings.Fields(val)
 		words[0] = ""
@@ -65,13 +62,11 @@ func TestGet(){
 				go testsite(val,ch)
 			}
 		}
-		for j,_:= range words{
+		for j:= 0; j < len(words) - 2;j++{
 			my[j]= *(<-ch)
 			fmt.Println(my[j])
 		}
-		close(ch)
-		time.Sleep(1 * time.Second)
-		fmt.Println("OUT")
+		time.Sleep(600 * time.Second)
 	}
 }
 
