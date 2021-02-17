@@ -8,7 +8,16 @@
 
 Перенаправляет на оригинальную ссылку
 
-что нужно сделать:
+### Запуск
 
-статистика по каждой ссылке
+docker-compose build
 
+docker-compose up
+
+### Тесты
+
+curl -X POST "http://localhost:9000/shortify/mail.ru"
+
+curl -X POST "http://localhost:9000/shortify/yandex.ru"
+
+curl -X GET "http://localhost:9000/(ссылка полученная из метода post)"
